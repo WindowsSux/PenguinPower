@@ -1,0 +1,69 @@
+// to create an array of strings.  This allows us to use Sarah's data cleaning stuff
+
+//things that need to be declared:
+var objects = [];
+var constraints = [];
+var sorted = [];
+
+// depending on how first/last is handled by Clayton:
+var first = "";  //FYI, Reading conflicting things on if "" counts as empty or null	
+var last = "";
+
+
+// The two functions will go with constraints button and objects button in GUI
+
+function addObjects(arr, item){
+//maybe add a line to make sure no duplicates in objects list already?
+arr.push(item);
+} //ends addObjects
+
+function addConstraints(array1, array2, constraint1, constraint2) {  //array=constraintsTemp
+temp1= constraint1.trim();		//Assuming this will work properly if only whitespace?
+temp2= constraint2.trim();
+if ((temp1 != null) && (temp1 != "") && (temp2 != null) && (temp2 != "")) {   //idiotproofing only putting in one piece.
+	var tempArr = []
+	tempArr[0]= temp1;
+	tempArr[1]= temp2;           
+	array.push(tempArr);		//pushes 2D array onto constraints array.
+}	//ends if
+} //ends addConstraint
+
+
+//So assumption at this point is that we have constraints in two D array
+// With special first and last buttons, sortItems Method becomes simpler.
+
+if (objects.length == 0) {   //technically, this might not be necessary
+	console.log("There are no objects; this is an empty list");
+	//Something which resets the program.
+	}  //covers case of running with an empty list of objects
+
+
+if (first != "")
+	sorted.push(first);
+	
+while (objects.length > 0) {							// i.e. objects list not empty
+	var objectCount=0;
+	for (i = 0; i < objects.length; i++) {
+		var tempob = objects[i];						// creates copy of object string
+			if (constraints[i][1].indexOf(tempob) == -1) {  //checks 2nd constraint   Need to check is [i][1] correct format
+				sorted.push(tempob);
+				objects.splice(i,1);
+					for (j=constraints.length-1; j>0; j--) {   //runs through constraints list backwards)
+						if (tempob == constraints[j][0])
+						constraints.splice(j,1);				// deletes irrelevant constraints
+					}									//ends for loop
+			}  											//ends if object not in constraints
+			else										// object can't be place because of constraints
+				objectCount++;							// iterates objectCount
+	}  													//ends for (i) loop, which iterates through objects
+	if ( objectCount == objects.length)  {				// i.e. no objects placed
+	console.log("The list is not possible");
+	//Something which resets the program.
+	}													//ends if (no objects placed in sort)
+}  //ends while loop
+
+if (last != "")
+	sorted.push(last);
+	
+//something to print the list.	
+	
